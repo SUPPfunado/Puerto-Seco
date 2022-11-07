@@ -1,12 +1,12 @@
-from re import X
-
-
 N = int(input("ingrese la cantidad maxima de contenedores que se pueden apilar: "))
 M = int(input("ingrese la cantidad maxima de pilas que se pueden hacer: "))
 print()
+
+N+=1
 contenedores = 0
+
 matriz = []
-consulta = ""
+
 for i in range(N):
     matriz.append([])
     for j in range (M):
@@ -14,14 +14,12 @@ for i in range(N):
 
 for i in range(N):
     for j in range (M):
-
         print("[", matriz[i][j], "]", end=" ")
     print()
 print()
 
 menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
-x = 1
-z = 1
+
 while menu !=4:
     if menu == 1:
         if contenedores == 0:
@@ -38,6 +36,7 @@ while menu !=4:
                         if contenedor == matriz [i][j]:
                             print("se encuentra fila", j+1, "altura", N-i)
                             print()
+                            
                             for i in range(N):
                                 for j in range (M):
                                     print("[", matriz[i][j], "]", end=" ")
@@ -49,67 +48,84 @@ while menu !=4:
                         numerocontenedora=int(input("Ingrese numero del contenedor a ubicar:"))
                         empresa = input("Ing-rese empresa:")
                     
+                        contenedor = numerocontenedora, empresa
                         for i in range(N):
                             for j in range (M):
-                                if numerocontenedora == matriz[i][j] and empresa == matriz [i][j]:
+                                if contenedor == matriz [i][j]:
                                     print("se encuentra fila", j+1, "altura", N-i)
-                                    for i in range(N):
-                                        for j in range (M):
-                                            print("[", matriz[i][j], "]", end=" ")
-                                        print()
+                                print()
+                                
+                                for i in range(N):
+                                    for j in range (M):
+                                        print("[", matriz[i][j], "]", end=" ")
+                                    print()
                         consulta = input("¿desea seguir?(y/n): ")
                     else:
                         continuar = False
-            
-        menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
+                        menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
 
     if menu == 2:
-        
-        numerocontenedora=int(input("Ingrese numero del contenedor a añadir:"))
-        empresa = input("Ingrese empresa:")
-        
-        for i in range(N):
-            # N controla la altura
-            for j in range (M):
-                # M controla la fila
-                matriz[N-x][M-z] = numerocontenedora, empresa
-        x +=1
-        if x == M:
+        h = ((N-1)*M)-(N-2)
+        if h == contenedores:
+            print("ya no se puede apilar mas contenedores, el puerto esta lleno") 
+            menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
+       
+        else:
             x = 1
-        if x == 1:
-            z +=1
-        contenedores += 1
-
-        for i in range(N):
-            for j in range (M):
-                print("[", matriz[i][j], "]", end=" ")
-            print()
-        
-        consulta = input("¿desea seguir?(y/n): ")
-        continuar = True
-        while continuar:
-            if consulta == "y" or consulta == "Y":
-                numerocontenedora=int(input("Ingrese numero del contenedor a añadir:"))
-                empresa = input("Ingrese empresa:")
-                for i in range(N):
-                    for j in range (M):
-                        matriz[N-x][M-z] = numerocontenedora, empresa
-                x +=1
-                if x == M:
-                    x = 1
-                if x == 1:
-                    z +=1
-                contenedores += 1
+            y = 1
+            numerocontenedora=int(input("Ingrese numero del contenedor a añadir:"))
+            empresa = input("Ingrese empresa:")
             
-                for i in range(N):
-                    for j in range (M):
-                        print("[", matriz[i][j], "]", end=" ")
-                    print()
-                consulta = input("¿desea seguir?(y/n): ")
-            else:
-                continuar = False
-                
-        menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
+            for i in range(N):
+                # N controla la altura
+                for j in range (M):
+                    # M controla la fila
+                    matriz[N-y][M-x] = numerocontenedora, empresa
+            y +=1
+            if y == N:
+                y = 1
+            if y == 1:
+                x +=1
+            contenedores += 1
+
+            for i in range(N):
+                for j in range (M):
+                    print("[", matriz[i][j], "]", end=" ")
+                print()
+            
+            continuar = True
+            consulta = input("¿desea seguir?(y/n): ")
+            while continuar:
+
+                if consulta == "y" or consulta == "Y":
+                    h = (N-1)*M
+                    h -=(N-2)
+                    if h == contenedores:
+                        print("ya no se puede apilar mas contenedores, el puerto esta lleno") 
+                        menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
+                    else:
+                        numerocontenedora=int(input("Ingrese numero del contenedor a añadir:"))
+                        empresa = input("Ingrese empresa:")
+                        for i in range(N):
+                        # N controla la altura
+                            for j in range (M):
+                                # M controla la fila
+                                matriz[N-y][M-x] = numerocontenedora, empresa
+                        y +=1
+                        if y == N:
+                            y = 1
+                        if y == 1:
+                            x +=1
+                        contenedores += 1
+
+                        for i in range(N):
+                            for j in range (M):
+                                print("[", matriz[i][j], "]", end=" ")
+                            print()
+                        consulta = input("¿desea seguir?(y/n): ")
+                else:
+                    continuar = False
+                    menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
 
     if menu == 3:
         if contenedores == 0:
@@ -118,79 +134,43 @@ while menu !=4:
             print()
             menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
         else:
-            for i in range(N):
-                for j in range (M):
-                    print("[", matriz[i][j], "]", end=" ")
-                print()
             numerocontenedora=int(input("Ingrese numero del contenedor a retirar:"))
             empresa = input("Ingrese empresa:")
-            ubicacionc= int(input("fila:"))
-            ubicaciona= int(input("columna:"))
-            
-            if matriz[ubicacionc-1][ubicaciona] == None and numerocontenedora == matriz[ubicacionc][ubicaciona] and empresa ==matriz[ubicacionc][ubicaciona]:
-                matriz[ubicacionc][ubicaciona] = None
-                print("el contenedor a sido retirado")
-                contenedores -= 1
-                for i in range(N):
-                    for j in range (M):
-                        print("[", matriz[i][j], "]", end=" ")
-                    print()
+            contenedor = numerocontenedora, empresa
 
-                consulta = input("¿desea seguir?(y/n): ")
-            else:
-                if matriz[ubicacionc-1][ubicaciona] != None:
-                    print("hay un contenedor arriba")
-                    consulta = input("¿desea seguir?(y/n): ")
-                else:
-                    if numerocontenedora != matriz[ubicacionc][ubicaciona] and empresa != matriz[ubicacionc][ubicaciona]:
-                        print("el contenedor no se encuentra en esa ubicacion")
-                        consulta = input("¿desea seguir?(y/n): ")
-                    else:
-                        if numerocontenedora != matriz[ubicacionc][ubicaciona]:
-                            print("el numero de ese contenedor no se encuentra en esa posicion")
-                            consulta = input("¿desea seguir?(y/n): ")
-                        else:
-                            if empresa != matriz[ubicacionc][ubicaciona]:
-                                print("el contenedor de esa empresa no se encuentra en esa posicion")
-                                consulta = input("¿desea seguir?(y/n): ")
-            consulta = input("¿desea seguir?(y/n): ")
-            while consulta == "y" or consulta == "Y":
-                for i in range(N):
-                    for j in range (M):
-                        print("[", matriz[i][j], "]", end=" ")
-                    print()
+            for i in range(N):
+                for j in range (M):
+                    if contenedor == matriz[i][j]:
 
-                numerocontenedora=int(input("Ingrese numero del contenedor a retirar:"))
-                empresa = input("Ingrese empresa:")
-                ubicacionc= int(input("fila:"))
-                ubicaciona= int(input("columna:"))
+                        if matriz[i-1][j] == None:
+                            
+                            terminar = True
+                            mov1 = 0
+                            mov2 = 0
 
-                if matriz[ubicacionc-1][ubicaciona] == None and numerocontenedora == matriz[ubicacionc][ubicaciona] and empresa ==matriz[ubicacionc][ubicaciona]:
-                    matriz[ubicacionc][ubicaciona] = None
-                    print("el contenedor a sido retirado")
-                    contenedores -= 1
-                    for i in range(N):
-                        for j in range (M):
-                            print("[", matriz[i][j], "]", end=" ")
-                        print()
+                            while terminar:
+                                temp = matriz [i-mov1][j]
+                                matriz[i-mov1][j] = temp
 
-                    consulta = input("¿desea seguir?(y/n): ")
-                else:      
-                    if matriz[ubicacionc-1][ubicaciona] != None:
-                        print("hay un contenedor arriba")
-                        consulta = input("¿desea seguir?(y/n): ")
-                    else:
-                        if numerocontenedora != matriz[ubicacionc][ubicaciona] and empresa != matriz[ubicacionc][ubicaciona]:
-                            print("el contenedor no se encuentra en esa ubicacion")
-                            consulta = input("¿desea seguir?(y/n): ")
-                        else:
-                            if numerocontenedora != matriz[ubicacionc][ubicaciona]:
-                                print("el numero de ese contenedor no se encuentra en esa posicion")
-                                consulta = input("¿desea seguir?(y/n): ")
-                            else:
-                                if empresa != matriz[ubicacionc][ubicaciona]:
-                                    ("el contenedor de esa empresa no se encuentra en esa posicion")
-                                    consulta = input("¿desea seguir?(y/n): ")
-                consulta = input("¿desea seguir?(y/n): ")
-        menu = int(input("1 para ubicar un contenedor \n2 para ingresar un contenedor \n3 para retirar un contenedor  \n4 para terminar la jornada \neleccion:"))
+                                matriz [i-mov1][j] = None
+                                mov1 +=1
+                                matriz[i-mov1][j] = temp
+                                
+                                for i in range(N):
+                                    for j in range (M):
+                                        print("[", matriz[i][j], "]", end=" ")
+                                    print()
+                                print()
+                                
+                                if i-mov1 <= 0:
+                                    matriz [i-mov1][j] = None
+                                    terminar = False
+                                    print("el contenedor se ha retirado")
+                                    contenedores -=1
+                                    y -=1
 
+                        if matriz[i-1][j] != None:
+                             
+                            terminar = True
+                            while terminar:
+                                print()
